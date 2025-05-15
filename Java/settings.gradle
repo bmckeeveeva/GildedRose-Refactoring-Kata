@@ -1,1 +1,9 @@
 rootProject.name = 'gilded-rose-kata'
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    repositories {
+        mavenCentral()
+    }
+}

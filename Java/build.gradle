@@ -1,9 +1,7 @@
 plugins {
     id 'java'
-}
-
-repositories {
-    mavenCentral()
+    id 'idea'
+    id 'io.freefair.lombok' version '8.3'
 }
 
 dependencies {
@@ -14,14 +12,18 @@ dependencies {
 
 group = 'com.gildedrose'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+
+java {
+    sourceCompatibility = 1.17
+    targetCompatibility = 1.17
+}
 
 test {
     useJUnitPlatform()
 }
 
-task texttest(type: JavaExec) {
+/*tasks.register('texttest', JavaExec) {
     main = "com.gildedrose.TexttestFixture"
     classpath = sourceSets.test.runtimeClasspath
     args "30"
-}
+}*/

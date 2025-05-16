@@ -1,6 +1,22 @@
 package com.gildedrose;
 
+import java.util.Map;
+
+import static com.gildedrose.Handler.CHANGE_NOTHING;
+import static com.gildedrose.Handler.DECREMENT_SELL_IN;
+
 class GildedRose {
+    private static final Map<String, Handler> HANDLERS = Map.of(
+        "Aged Brie",
+        new Handler(GildedRose::agedBrie, DECREMENT_SELL_IN),
+        "Backstage passes to a TAFKAL80ETC concert",
+        new Handler(GildedRose::concert, DECREMENT_SELL_IN),
+        "Sulfuras, Hand of Ragnaros",
+        new Handler(CHANGE_NOTHING, CHANGE_NOTHING)
+    );
+
+    private static final Handler NORMAL_HANDLER = new Handler(GildedRose::normal, DECREMENT_SELL_IN);
+
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -9,19 +25,7 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            switch (item.name) {
-                case "Aged Brie":
-                    agedBrie(item);
-                    break;
-                case "Backstage passes to a TAFKAL80ETC concert":
-                    concert(item);
-                    break;
-                case "Sulfuras, Hand of Ragnaros":
-                    sulfuras(item);
-                    break;
-                default:
-                    normal(item);
-            }
+            HANDLERS.getOrDefault(item.name, NORMAL_HANDLER).update(item);
 
             if (item.quality < 0) {
                 item.quality = 0;
@@ -33,17 +37,15 @@ class GildedRose {
         }
     }
 
-    void agedBrie(Item item) {
+    static void agedBrie(Item item) {
         item.quality++;
 
         if (item.sellIn < 0) {
             item.quality++;
         }
-
-        item.sellIn--;
     }
 
-    void concert(Item item) {
+    static void concert(Item item) {
         if (item.sellIn < 1) {
             item.quality = 0;
         } else {
@@ -57,21 +59,13 @@ class GildedRose {
                 item.quality++;
             }
         }
-
-        item.sellIn--;
     }
 
-    void sulfuras(Item item) {
-
-    }
-
-    void normal(Item item) {
+    static void normal(Item item) {
         item.quality--;
 
         if (item.sellIn < 1) {
             item.quality--;
         }
-
-        item.sellIn--;
     }
 }

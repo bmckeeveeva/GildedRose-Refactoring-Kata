@@ -5,10 +5,6 @@ class TestItem extends Item {
         super(name, sellIn, quality);
     }
 
-    TestItem withQuality(int quality) {
-        return new TestItem(name, sellIn, quality);
-    }
-
     static TestItem[] singletonItem(String name, int sellIn, int quality) {
         return new TestItem[]{ new TestItem(name, sellIn, quality) };
     }

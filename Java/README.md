@@ -28,3 +28,10 @@ The other relies on your CLASSPATH being set correctly in [environment.gr](../te
 
     executable:com.gildedrose.TexttestFixture
     interpreter:java
+
+## My approach
+
+* Get 100% test coverage. - commit
+* One by one create a private function for each item type, making sure tests continue passing along the way.  These were really code replacing.  I did not use refactoring tools or careful extraction techniques I just reimplemented the requirements.  I did so in a way that only one item type was broken at a time, so the noise of tests failing for all types wouldn't distract me. - commit
+* Pull the quality boundary code into the main method so each private function can be simpler. - commit
+* Create "handlers" that have a quality and sellIn function.  Create a handler for each item type in a Map by item name. - commit
